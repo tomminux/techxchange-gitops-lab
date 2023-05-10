@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: brewz
+  namespace: sharp-poodle
+spec:
+  project: default
+  source:
+    path: manifests/brewz
+    repoURL: https://github.com/tomminux/techxchange-gitops-lab.git
+    targetRevision: HEAD
+  destination:
+    namespace: sharp-poodle
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
